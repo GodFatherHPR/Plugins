@@ -374,6 +374,13 @@ function _send_audio(receiver, file_path, cb_function, cb_extra)
   send_audio(receiver, file_path, rmtmp_cb, cb_extra)
 end
 
+function send_audio_from_url(receiver, url, cb_function, cb_extra)
+local file = download_to_file(url,'voice.ogg')
+        local cb_extra = {file_path=file}
+        local mime_type = mimetype.get_content_type_no_sub(ext)
+    _send_audio(receiver, file, rmtmp_cb, cb_extra)
+end
+
 function send_sticker_from_url(receiver, url, cb_function, cb_extra)
 local file = download_to_file(url,'sticker.webp')
         local cb_extra = {file_path=file}
@@ -973,7 +980,7 @@ function ban_list(chat_id)
 	local user_info = redis:hgetall('user:'..v)
 		if user_info and user_info.print_name then
 			local print_name = string.gsub(user_info.print_name, "_", " ")
-			local print_name = string.gsub(print_name, "?", "")
+			local print_name = string.gsub(print_name, "‮", "")
 			text = text..k.." - "..print_name.." ["..v.."]\n"
 		else
 			text = text..k.." - "..v.."\n"
@@ -991,7 +998,7 @@ function banall_list()
     local user_info = redis:hgetall('user:'..v)
 		if user_info and user_info.print_name then
 			local print_name = string.gsub(user_info.print_name, "_", " ")
-			local print_name = string.gsub(print_name, "?", "")
+			local print_name = string.gsub(print_name, "‮", "")
 			text = text..k.." - "..print_name.." ["..v.."]\n"
 		else
 			text = text..k.." - "..v.."\n"
@@ -1118,7 +1125,7 @@ function muted_user_list(chat_id)
   		local user_info = redis:hgetall('user:'..v)
 		if user_info and user_info.print_name then
 			local print_name = string.gsub(user_info.print_name, "_", " ")
-			local print_name = string.gsub(print_name, "?", "")
+			local print_name = string.gsub(print_name, "‮", "")
 			text = text..k.." - "..print_name.." ["..v.."]\n"
 		else
 		text = text..k.." - [ "..v.." ]\n"
