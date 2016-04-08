@@ -388,6 +388,20 @@ local file = download_to_file(url,'sticker.webp')
     _send_document(receiver, file, rmtmp_cb, cb_extra)
 end
 
+function send_gif_from_url(receiver, url, cb_function, cb_extra)
+local file = download_to_file(url,'giphy.gif')
+        local cb_extra = {file_path=file}
+        local mime_type = mimetype.get_content_type_no_sub(ext)
+    _send_document(receiver, file, rmtmp_cb, cb_extra)
+end
+ 
+function send_video_from_url(receiver, url, cb_function, cb_extra)
+local file = download_to_file(url,'movie.mp4')
+        local cb_extra = {file_path=file}
+        local mime_type = mimetype.get_content_type_no_sub(ext)
+    _send_document(receiver, file, rmtmp_cb, cb_extra)
+end
+
 -- Parameters in ?a=1&b=2 style
 function format_http_params(params, is_get)
   local str = ''
